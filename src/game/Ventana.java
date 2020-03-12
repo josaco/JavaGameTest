@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -20,6 +21,11 @@ public class Ventana extends JFrame implements Runnable {
 
 	private BufferStrategy bs;
 	private Graphics g;
+
+	private final int FPS = 60;
+	private double TARGETTIME = 1000000000 / FPS;
+	private double delta = 0;
+	private int AVERAGEFPS = FPS;
 
 	public Ventana() {
 		setTitle("Juego de naves");
@@ -64,7 +70,10 @@ public class Ventana extends JFrame implements Runnable {
 		// ------------------------------
 
 		g.clearRect(0, 0, WIDTH, HEIGHT);
-		g.drawRect(x, 0, 100, 100);
+
+		g.setColor(Color.black);
+
+		g.drawString("" + AVERAGEFPS, 1, 10);
 
 		// -------------------------------------
 		g.dispose();
@@ -74,11 +83,34 @@ public class Ventana extends JFrame implements Runnable {
 	@Override
 	public void run() {
 
+		long now = 0;
+		long lastTime = System.nanoTime();
+		int frames = 0;
+		long time = 0;
+
 		while (running)
 
 		{
-			update();
-			draw();
+			// update();
+			// draw();
+			now = System.nanoTime();
+			delta += (now - lastTime) / TARGETTIME;
+			time += (now - lastTime);
+			lastTime = now;
+
+			if (delta >= 1) {
+				update();
+				draw();
+				delta--;
+				frames++;
+
+			}
+			if (time >= 1000000000) {
+
+				AVERAGEFPS = frames;
+				frames = 0;
+				time = 0;
+			}
 
 		}
 
