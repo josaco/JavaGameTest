@@ -8,6 +8,8 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import graphics.Assets;
+
 public class Ventana extends JFrame implements Runnable {
 
 	/**
@@ -28,7 +30,7 @@ public class Ventana extends JFrame implements Runnable {
 	private int AVERAGEFPS = FPS;
 
 	public Ventana() {
-		setTitle("Juego de naves");
+		setTitle("[ Infect them all!!!" + " ]|[ " + "FPS: " + AVERAGEFPS);
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -51,10 +53,8 @@ public class Ventana extends JFrame implements Runnable {
 
 	}
 
-	int x = 0;
-
 	private void update() {
-		x++;
+
 	}
 
 	private void draw() {
@@ -69,15 +69,17 @@ public class Ventana extends JFrame implements Runnable {
 
 		// ------------------------------
 
-		g.clearRect(0, 0, WIDTH, HEIGHT);
-
-		g.setColor(Color.black);
-
-		g.drawString("" + AVERAGEFPS, 1, 10);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.drawImage(Assets.player, 0, 0, null);
 
 		// -------------------------------------
 		g.dispose();
 		bs.show();
+	}
+
+	private void init() {
+		Assets.init();
 	}
 
 	@Override
@@ -87,6 +89,8 @@ public class Ventana extends JFrame implements Runnable {
 		long lastTime = System.nanoTime();
 		int frames = 0;
 		long time = 0;
+
+		init();
 
 		while (running)
 
