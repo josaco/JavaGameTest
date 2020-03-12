@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import graphics.Assets;
+import states.GameState;
 
 public class Ventana extends JFrame implements Runnable {
 
@@ -29,7 +30,11 @@ public class Ventana extends JFrame implements Runnable {
 	private double delta = 0;
 	private int AVERAGEFPS = FPS;
 
-	public Ventana() {
+	private GameState gameState;
+
+	public Ventana()
+
+	{
 		setTitle("[ Infect them all!!!" + " ]|[ " + "FPS: " + AVERAGEFPS);
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,16 +53,23 @@ public class Ventana extends JFrame implements Runnable {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+
+	{
 		new Ventana().start();
 
 	}
 
-	private void update() {
+	private void update()
+
+	{
+		gameState.update();
 
 	}
 
-	private void draw() {
+	private void draw()
+
+	{
 		bs = canvas.getBufferStrategy();
 
 		if (bs == null) {
@@ -71,19 +83,26 @@ public class Ventana extends JFrame implements Runnable {
 
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		g.drawImage(Assets.player, 0, 0, null);
+
+		gameState.draw(g);
 
 		// -------------------------------------
 		g.dispose();
 		bs.show();
 	}
 
-	private void init() {
+	private void init()
+
+	{
 		Assets.init();
+		gameState = new GameState();
+
 	}
 
 	@Override
-	public void run() {
+	public void run()
+
+	{
 
 		long now = 0;
 		long lastTime = System.nanoTime();
@@ -102,14 +121,18 @@ public class Ventana extends JFrame implements Runnable {
 			time += (now - lastTime);
 			lastTime = now;
 
-			if (delta >= 1) {
+			if (delta >= 1)
+
+			{
 				update();
 				draw();
 				delta--;
 				frames++;
 
 			}
-			if (time >= 1000000000) {
+			if (time >= 1000000000)
+
+			{
 
 				AVERAGEFPS = frames;
 				frames = 0;
@@ -122,14 +145,18 @@ public class Ventana extends JFrame implements Runnable {
 
 	}
 
-	private void start() {
+	private void start()
+
+	{
 		thread = new Thread(this);
 		thread.start();
 		running = true;
 
 	}
 
-	private void stop() {
+	private void stop()
+
+	{
 		try {
 			thread.join();
 			running = false;
