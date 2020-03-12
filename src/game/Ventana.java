@@ -9,13 +9,11 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import graphics.Assets;
+import input.KeyBoard;
 import states.GameState;
 
 public class Ventana extends JFrame implements Runnable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 800, HEIGHT = 600;
 	private Canvas canvas;
@@ -31,6 +29,7 @@ public class Ventana extends JFrame implements Runnable {
 	private int AVERAGEFPS = FPS;
 
 	private GameState gameState;
+	private KeyBoard keyBoard;
 
 	public Ventana()
 
@@ -43,6 +42,7 @@ public class Ventana extends JFrame implements Runnable {
 		setVisible(true);
 
 		canvas = new Canvas();
+		keyBoard = new KeyBoard();
 
 		canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
@@ -50,6 +50,7 @@ public class Ventana extends JFrame implements Runnable {
 		canvas.setFocusable(true);
 
 		add(canvas);
+		canvas.addKeyListener(keyBoard);
 
 	}
 
@@ -63,6 +64,7 @@ public class Ventana extends JFrame implements Runnable {
 	private void update()
 
 	{
+		keyBoard.update();
 		gameState.update();
 
 	}
