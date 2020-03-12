@@ -1,35 +1,44 @@
 package gameObjects;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import graphics.Assets;
 import input.KeyBoard;
 import math.Vector2D;
 
-public class Player extends GameObject {
+public class Player extends MovingObject {
 
-	public Player(Vector2D position, BufferedImage texture) {
-		super(position, texture);
+	private Vector2D heading;
 
+	public Player(Vector2D position, Vector2D velocity, BufferedImage texture) {
+		super(position, velocity, texture);
+		heading = new Vector2D(0, 1);
 	}
 
 	@Override
 	public void update() {
 		if (KeyBoard.RIGHT) {
-			position.setX(position.getX() + 5);
+			angle += Math.PI / 30;
 		}
+
 		if (KeyBoard.LEFT) {
-			position.setX(position.getX() - 5);
+			angle -= Math.PI / 30;
 		}
-		if (KeyBoard.UP) {
-			position.setY(position.getY() - 5);
-		}
+		heading = heading.setDirection(angle - Math.PI / 2);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(texture, (int) position.getX(), (int) position.getY(), null);
+		Graphics2D g2d = (Graphics2D) g;
 
+		at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
+
+		at.rotate(angle, Assets.player.getWidth() / 2, Assets.player.getHeight() / 2);
+
+		g2d.drawImage(Assets.player, at, null);
 	}
 
 }
