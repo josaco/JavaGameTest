@@ -1,6 +1,5 @@
-# JavaGameTest
-Testing and learnig github and Java, practicing coding a simple java game
+# Java Game Test with Evil Infecting CoronaVirus
 
-Trying to clone the repository and edit in Eclipse later.
+DISCLAIMER :: "I´m not the CoronaVirus Creator!!"
 
-JoSaCo 2020
+JoSaCo 2020 ™
