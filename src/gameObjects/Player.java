@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import game.Ventana;
 import graphics.Assets;
 import input.KeyBoard;
 import math.Vector2D;
@@ -41,11 +42,21 @@ public class Player extends MovingObject {
 
 		velocity = velocity.add(acceleration);
 
-		velocity.limit(maxVel);
+		velocity = velocity.limit(maxVel);
 
 		heading = heading.setDirection(angle - Math.PI / 2);
 
 		position = position.add(velocity);
+
+		if (position.getX() > Ventana.WIDTH)
+			position.setX(0);
+		if (position.getY() > Ventana.HEIGHT)
+			position.setY(0);
+
+		if (position.getX() < 0)
+			position.setX(Ventana.WIDTH);
+		if (position.getY() < 0)
+			position.setY(Ventana.HEIGHT);
 	}
 
 	@Override
@@ -54,7 +65,7 @@ public class Player extends MovingObject {
 
 		at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
 
-		at.rotate(angle, Assets.player.getWidth() / 2, Assets.player.getHeight() / 2);
+		at.rotate(angle, width / 2, height / 2);
 
 		g2d.drawImage(Assets.player, at, null);
 	}
