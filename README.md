@@ -1,5 +1,5 @@
-# Java Game Test with Evil Infecting CoronaVirus
+# Java Game Test - Spaceship Game
 
-DISCLAIMER :: "I´m not the CoronaVirus Creator!!"
+"My first java game following internet help"
 
 JoSaCo 2020 ™
